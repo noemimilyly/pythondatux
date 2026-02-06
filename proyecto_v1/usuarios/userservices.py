@@ -36,4 +36,18 @@ def WelcomeUser(email:str,emailService:EmailService):
     except Exception as e:
         print("e",e)
     
-#marco.diaz@sistema.com
+#definimos el insert user para usarlo
+
+def insertUser(email: str, password: str, typeUser: str, conn: Connection):
+    try:
+        cursor = conn.cursor()
+        query = """
+        INSERT INTO usuarios_sistema (email, password, type_user)
+        VALUES (?, ?, ?)
+        """
+        cursor.execute(query, (email, password, type_user))
+        conn.commit()
+        return True
+    except Exception as e:
+        print("Error al insertar usuario:", e)
+        return False
