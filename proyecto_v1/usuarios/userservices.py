@@ -30,11 +30,15 @@ def Login(email:str, password:str, conn:Connection):
         
     except Exception as e:
         print(e)
-def WelcomeUser(email:str,emailService:EmailService):
+def WelcomeUser(email: str, emailService: EmailService):
     try:
-        emailService.send_email(email,"Bienvenido",f"Bienvenido {email}")
+        emailService.send_email(
+            email,
+            "Acceso al Sistema Inmobiliario",
+            "Has iniciado sesion correctamente en el sistema inmobiliario DATUX."
+        )
     except Exception as e:
-        print("e",e)
+        print("Error al enviar correo:", e)
     
 #definimos el insert user para usarlo
 
@@ -45,7 +49,7 @@ def insertUser(email: str, password: str, typeUser: str, conn: Connection):
         INSERT INTO usuarios_sistema (email, password, type_user)
         VALUES (?, ?, ?)
         """
-        cursor.execute(query, (email, password, type_user))
+        cursor.execute(query, (email, password, typeUser))
         conn.commit()
         return True
     except Exception as e:
