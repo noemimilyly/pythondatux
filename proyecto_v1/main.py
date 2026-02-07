@@ -40,6 +40,9 @@ import random
 from usuarios.userservices import Login,WelcomeUser
 from sqlite3 import Connection
 from config.email import EmailService
+# Importar funciones del servicio
+from servicio.propiedades import listar_propiedades, listar_clientes
+
 console = Console()
 config = ConfigBd()
 conn = config.bd
@@ -117,19 +120,47 @@ def getMenuAdmin():
         table.add_row("2", "Gestión de Propiedades")
         table.add_row("3", "Reportes Financieros")
         table.add_row("4", "Dashboard")
+        table.add_row("5", "Sistema Inmobiliario") # Agregamos la opcion del sistema inmobilario
+        
         table.add_row("0", "Cerrar Sesión")
         
         console.print(table)
         
-        opcion = Prompt.ask("Seleccione una opción", choices=["0", "1", "2", "3", "4"])
+        opcion = Prompt.ask("Seleccione una opción", choices=["0", "1", "2", "3", "4", "5" ]) # Agregamos la opcion numero 5
         
         if opcion == "0":
             console.print("\n[yellow]Cerrando sesión...[/yellow]")
             break
+        # Agregamos la opcion del sistema inmobilario
+        elif opcion == "5":
+            menu_inmobiliario(conn)
         else:
             console.print(f"\n[bold blue]Función pendiente de implementar: Opción {opcion}[/bold blue]")
             console.input("Presione Enter para continuar...")
             pass
+# Agregamos el menu del sistema Inmobiliario
+def menu_inmobiliario(conn):
+    """Menú del Sistema Inmobiliario """
+    while True:
+        console.clear()
+        console.print("[bold cyan]════════════════════════════════════════[/bold cyan]")
+        console.print("[bold cyan]      SISTEMA INMOBILIARIO              [/bold cyan]")
+        console.print("[bold cyan]════════════════════════════════════════[/bold cyan]")
+        console.print()
+        console.print("  1. Listar Propiedades")
+        console.print("  2. Listar Clientes")
+        console.print("  0. Volver")
+        console.print()
+        
+        opcion = Prompt.ask("Seleccione una opción", choices=["0", "1", "2"])
+        if opcion == "0":
+            break
+        elif opcion == "1":
+            listar_propiedades(conn)
+            console.input("\nPresione Enter para continuar...")
+        elif opcion == "2":
+            listar_clientes(conn)
+            console.input("\nPresione Enter para continuar...")
 
 def getMenuSale():
     """Menú para personal de ventas"""
@@ -151,15 +182,19 @@ def getMenuSale():
         table.add_row("2", "Registrar Cliente")
         table.add_row("3", "Nueva Venta")
         table.add_row("4", "Mis Ventas")
+        table.add_row("5", "Sistema Inmobiliario")  # agregar la opcion de sistema inmobiliario
         table.add_row("0", "Cerrar Sesión")
         
         console.print(table)
         
-        opcion = Prompt.ask("Seleccione una opción", choices=["0", "1", "2", "3", "4"])
+        opcion = Prompt.ask("Seleccione una opción", choices=["0", "1", "2", "3", "4", "5"]) # agregmos la opcion numero 5
         
         if opcion == "0":
             console.print("\n[yellow]Cerrando sesión...[/yellow]")
             break
+        # Agregamos la opcion del sistema inmobilario
+        elif opcion == "5":
+            menu_inmobiliario(conn) 
         else:
             console.print(f"\n[bold blue]Función pendiente de implementar: Opción {opcion}[/bold blue]")
             console.input("Presione Enter para continuar...")
