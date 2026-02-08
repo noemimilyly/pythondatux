@@ -3,7 +3,7 @@ from config.email import EmailService
 # Crear instancia del servicio
 email_service = EmailService()
 
-# Enviar correo simple
+# Enviar correo  simple
 resultado = email_service.send_email(
     to_email="mimipz15038@gmail.com",
     subject="Prueba de Sistema DATUX",
